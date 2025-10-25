@@ -1,0 +1,35 @@
+def romanToInt(s: str) -> int:
+    # Mapping of Roman numerals to their integer values
+    roman_map = {
+        'I': 1,
+        'V': 5,
+        'X': 10,
+        'L': 50,
+        'C': 100,
+        'D': 500,
+        'M': 1000
+    }
+    
+    total = 0
+    i = 0
+    n = len(s)
+    
+    while i < n:
+        # Check if current character forms a subtraction pair with next character
+        if i + 1 < n:
+            current_val = roman_map[s[i]]
+            next_val = roman_map[s[i + 1]]
+            
+            # Check for subtraction cases
+            if (s[i] == 'I' and (s[i + 1] == 'V' or s[i + 1] == 'X')) or \
+               (s[i] == 'X' and (s[i + 1] == 'L' or s[i + 1] == 'C')) or \
+               (s[i] == 'C' and (s[i + 1] == 'D' or s[i + 1] == 'M')):
+                total += (next_val - current_val)
+                i += 2  # Skip next character since we've processed the pair
+                continue
+        
+        # Regular case - just add the current value
+        total += roman_map[s[i]]
+        i += 1
+    
+    return total
