@@ -1,0 +1,31 @@
+class Solution:
+    def reverse(self, x: int) -> int:
+        INT_MAX = 2**31 - 1  # 2147483647
+        INT_MIN = -2**31     # -2147483648
+        
+        rev = 0
+        sign = 1 if x >= 0 else -1
+        x = abs(x)
+        
+        while x != 0:
+            # Get last digit
+            digit = x % 10
+            x //= 10
+            
+            # Check for overflow before multiplying
+            if rev > INT_MAX // 10:
+                return 0
+            if rev == INT_MAX // 10 and digit > 7:  # INT_MAX % 10 = 7
+                return 0
+            
+            # Check for underflow before multiplying (for negative case)
+            if sign == -1:
+                if rev > abs(INT_MIN) // 10:
+                    return 0
+                if rev == abs(INT_MIN) // 10 and digit > 8:  # abs(INT_MIN) % 10 = 8
+                    return 0
+            
+            rev = rev * 10 + digit
+        
+        return sign * rev
+        
