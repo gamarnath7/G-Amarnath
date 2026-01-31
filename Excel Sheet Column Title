@@ -1,0 +1,22 @@
+def convertToTitle(columnNumber: int) -> str:
+    result = []
+    while columnNumber > 0:
+        # Subtract 1 to handle 1-based indexing (A=1, Z=26)
+        columnNumber -= 1
+        
+        # Get the remainder (0-25)
+        remainder = columnNumber % 26
+        
+        # Convert 0-25 to 'A'-'Z' using ASCII (A is 65)
+        result.append(chr(remainder + 65))
+        
+        # Move to the next "digit"
+        columnNumber //= 26
+        
+    # The characters are collected in reverse order
+    return "".join(reversed(result))
+
+# Examples:
+print(convertToTitle(1))    # Output: "A"
+print(convertToTitle(28))   # Output: "AB"
+print(convertToTitle(701))  # Output: "ZY"
